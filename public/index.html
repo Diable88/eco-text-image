@@ -35,9 +35,29 @@
   </style>
 </head>
 <body>
-  <img src='1.jpg' alt='Image' />
-  <button class="button">CHỌN ẢNH</button>
-  <button class="button">UPLOAD</button>
+  <img src='1.jpg' alt='Image' /><div class="container">
+    <img id="background" src="2.jpg" alt="Hình nền cố định" loading="lazy">
+    <div class="upload-section">
+      <div class="upload-buttons d-flex align-items-start">
+
+        <button id="changeBackground" hidden>CHỌN HÌNH NỀN MỚI</button>
+        <input type="file" id="newBackgroundImage" hidden>
+
+        <input type="file" id="imageUpload" hidden>
+        <label for="imageUpload" class="upload-button">CHỌN ẢNH</label>
+
+        <div class="d-flex flex-column">
+          <button class="upload-submit">UPLOAD</button>
+          <div id="noImageChosen" class="text-danger d-none">Chưa chọn ảnh</div>
+        </div>
+         <div class="upload-buttons d-flex align-items-center">
+
+      </div>
+    </div>
+  </div>
+  <input type="text" id="userMessage" placeholder="NHẬP THÔNG ĐIỆP CỦA BẠN" class="form-control me-2" style="max-width: 300px;">
+  </div>
+
   <!-- Crop ảnh -->
   <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -219,4 +239,5 @@
     }
   </script>
 </body>
+
 </html>
