@@ -63,7 +63,6 @@
           <div id="noImageChosen" class="text-danger d-none">Chưa chọn ảnh</div>
         </div>
          <div class="upload-buttons d-flex align-items-center">
-
       </div>
 
   <!-- Crop ảnh -->
@@ -86,16 +85,13 @@
       </div>
     </div>
   </div>
-
-
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    function dataURLtoBlob(dataURL)
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+          function dataURLtoBlob(dataURL)
     {
       const byteString = atob(dataURL.split(',')[1]);
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
-
       for (let i = 0; i < byteString.length; i++)
       {
         ia[i] = byteString.charCodeAt(i);
@@ -104,11 +100,10 @@
       return new Blob([ab], { type: 'image/png' }); // Đặt kiểu MIME tương ứng với loại ảnh bạn đang sử dụng
     }
   </script>
-  <script>
+        <script>
     const API_NAME = "12345";
     const API_KEY = "w99E996F6Df1Dx3Tb9brixzx";
     let croppedDataURL = "";
-
     const fileInput = $('#imageUpload')[0];
     const uploadButton = $('.upload-submit');
     const backgroundImage = $('#background')[0];
