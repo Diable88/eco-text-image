@@ -38,5 +38,185 @@
   <img src='1.jpg' alt='Image' />
   <button class="button">CHỌN ẢNH</button>
   <button class="button">UPLOAD</button>
+  <!-- Crop ảnh -->
+  <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="cropModalLabel">Điều chỉnh kích thước ảnh</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="crop-container" style="height: 500px;">
+            <img id="cropper-image" class="h-100 w-100" style="max-width: 100%;" src="" alt="Ảnh cần crop">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tắt</button>
+          <button type="button" class="btn btn-primary" id="cropModalSubmitButton">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    function dataURLtoBlob(dataURL)
+    {
+      const byteString = atob(dataURL.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+
+      for (let i = 0; i < byteString.length; i++)
+      {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      return new Blob([ab], { type: 'image/png' }); // Đặt kiểu MIME tương ứng với loại ảnh bạn đang sử dụng
+    }
+  </script>
+  <script>
+    const API_NAME = "12345";
+    const API_KEY = "w99E996F6Df1Dx3Tb9brixzx";
+    let croppedDataURL = "";
+
+    const fileInput = $('#imageUpload')[0];
+    const uploadButton = $('.upload-submit');
+    const backgroundImage = $('#background')[0];
+    const isImageChosen = $('#noImageChosen');
+    const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    $(document).ready(function ()
+    {
+      $('.upload-submit').on('click', function ()
+      {
+        handleUpload();
+      });
+
+      $('#imageUpload').on('change', function ()
+      {
+        $('#cropModal').modal('show');
+        $('#cropModal').on('shown.bs.modal', function ()
+        {
+          const file = fileInput.files[0];
+          const reader = new FileReader();
+
+          reader.onload = function (e)
+          {
+            const cropperImage = $('#cropper-image');
+            cropperImage.attr('src', e.target.result);
+
+            const cropper = new Cropper(cropperImage[0], {
+              aspectRatio: NaN,
+              autoCropArea: 1,
+              viewMode: 1
+            });
+
+            function handleCropSubmit()
+            {
+              const croppedCanvas = cropper.getCroppedCanvas();
+              croppedDataURL = croppedCanvas.toDataURL(file.type);
+              $('#cropModal').modal('hide');
+            }
+
+            $('#cropModalSubmitButton').on('click', handleCropSubmit);
+
+            $('#cropModal').on('hidden.bs.modal', function ()
+            {
+              fileInput.value = "";
+              cropper.destroy();
+            });
+          };
+
+          reader.readAsDataURL(file);
+        });
+
+      });
+    });
+
+    async function handleUpload()
+    {
+      uploadButton.prop('disabled', true);
+      uploadButton.text('Đang xử lý...');
+
+      if (croppedDataURL === "")
+      {
+        uploadButton.prop('disabled', false);
+        uploadButton.text('UPLOAD');
+        isImageChosen.removeClass('d-none');
+        return;
+      }
+     
+      console.log(croppedDataURL);
+
+      var byteString = atob(croppedDataURL.split(',')[1]);
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
+      for (var i = 0; i < byteString.length; i++)
+      {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      // Tạo đối tượng Blob từ ArrayBuffer
+      var blob = new Blob([ab], { type: 'image/png' });
+
+      // Tạo đối tượng File từ Blob
+      var file = new File([blob], 'filename.png', { type: 'image/png' });
+
+      isImageChosen.addClass('d-none');
+      const formData = new FormData();
+      formData.append('size', 'auto');
+      formData.append('image_file', file);
+
+      try
+      {
+        const response = await axios.post('https://api.remove.bg/v1.0/removebg', formData, {
+          headers: {
+            'X-Api-Key': API_KEY,
+          },
+          responseType: 'blob',
+        });
+
+        const processedImageBlob = await response.data;
+        const processedImageURL = URL.createObjectURL(processedImageBlob);
+        const processedImage = new Image();
+
+        processedImage.onload = function ()
+        {
+          var processedImageWidth = 768;
+          var processedImageHeight = 1024;
+          var processedImageX = 1000;
+          var processedImageY = 20;
+
+          const canvas = document.createElement('canvas');
+          canvas.width = backgroundImage.naturalWidth;
+          canvas.height = backgroundImage.naturalHeight;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(backgroundImage, 0, 0);
+          ctx.drawImage(processedImage, processedImageX, processedImageY, processedImageWidth, processedImageHeight);
+
+          backgroundImage.src = canvas.toDataURL('image/jpeg');
+
+          URL.revokeObjectURL(processedImageURL);
+
+          uploadButton.prop('disabled', false);
+          uploadButton.text('UPLOAD');
+        };
+
+        processedImage.src = processedImageURL;
+
+        uploadButton.prop('disabled', false);
+        uploadButton.text('UPLOAD');
+      } catch (error)
+      {
+        console.error(error);
+
+        uploadButton.prop('disabled', false);
+        uploadButton.text('UPLOAD');
+      }
+    }
+  </script>
 </body>
 </html>
