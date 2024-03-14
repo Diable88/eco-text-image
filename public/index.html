@@ -11,55 +11,104 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
   <style>
-    body {
-      background-color: #BFD8D2; /* Pastel green */
-      text-align: center;  
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      aspect-ratio: attr(width) / attr(height);
-    }
-    .button {
-      background-color: #FFD700; /* Gold color */
-      color: white;
-      padding: 15px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 9px #999;
-      font-weight: bold;
-    }
-    .button:hover {background-color: #FFC700}
-    .button:active {
-      background-color: #FFC700;
-      box-shadow: 0 5px #666;
-      transform: translateY(4px);
-    }
-  </style>
+  body {
+    background-color: #BFD8D2; /* Màu xanh pastel */
+    text-align: center;  
+    font-family: 'Arial', sans-serif; /* Phông chữ mặc định */
+    padding-top: 50px; /* Đẩy nội dung xuống một chút để tránh navbar  */
+  }
+
+  .button, .upload-button, .upload-submit { /* Áp dụng style chung cho các nút */
+    background-color: #FFD700; /* Màu vàng */
+    color: white; /* Chữ màu trắng */
+    padding: 15px 32px; /* Đệm xung quanh nội dung bên trong nút */
+    text-align: center; /* Căn giữa nội dung nút */
+    text-decoration: none; /* Không gạch chân cho liên kết */
+    display: inline-block; /* Cho phép xác định kích thước nút */
+    font-size: 16px; /* Cỡ chữ nút */
+    margin: 4px 2px; /* Khoảng cách giữa các nút */
+    cursor: pointer; /* Con trỏ chuột khi di chuyển qua nút */
+    border: none; /* Không viền */
+    border-radius: 10px; /* Bo góc nút */
+    box-shadow: 0 4px #999; /* Tạo bóng cho nút */
+    transition: all 0.2s ease-in-out; /* Thời gian chuyển tiếp khi thay đổi style */
+  }
+
+  .button:hover, .upload-button:hover, .upload-submit:hover { /* Style khi hover vào nút */
+    background-color: #ffbf00; /* Màu vàng sáng hơn khi hover */
+    box-shadow: 0 6px #666; /* Tạo bóng đậm hơn */
+    transform: translateY(-2px); /* Nhấc nút lên 2 pixels */
+  }
+
+  .button:active, .upload-button:active, .upload-submit:active { /* Style khi nhấn giữ nút */
+    background-color: #e0ac00; /* Màu vàng sẫm hơn khi nhấn */
+    box-shadow: 0 2px #666; /* Tạo bóng nhẹ hơn */
+    transform: translateY(0px); /* Trả nút về vị trí ban đầu khi nhấn */
+  }
+
+  .image-container img {
+    max-width: 100%; /* Chiều rộng tối đa của ảnh */
+    max-height: 70vh; /* Chiều cao tối đa của ảnh theo viewport height */
+    object-fit: contain; /* Đảm bảo không làm méo ảnh */
+  }
+
+  .d-none {
+    display: none; /* Ẩn phần tử */
+  }
+
+  .d-flex {
+    display: flex; /* Áp dụng flexbox */
+  }
+
+  .align-items-center {
+    align-items: center; /* Căn giữa các item theo chiều dọc */
+  }
+
+  .align-items-start {
+    align-items: flex-start; /* Căn đỉnh các item theo chiều dọc */
+  }
+
+  .mb-3 {
+    margin-bottom: 1rem; /* Khoảng cách dưới 16px */
+  }
+
+  .text-danger {
+    color: #dc3545; /* Màu chữ cảnh báo */
+  }
+
+  #noImageChosen {
+    margin-top: 10px; /* Khoảng cách trên */
+  }
+
+  /* Phần này để chỉnh cho preview của cropper */
+  .cropper-container {
+    margin-top: 20px; /* Khoảng cách phần crop từ trên xuống */
+    max-width: 650px; /* Chiều rộng tối đa của cropper */
+    height: auto; /* Chiều cao tự động theo propor */
+    margin-left: auto; /* Tự động căn giữa ngang */
+    margin-right: auto; /* Tự động căn giữa ngang */
+  }
+
+  .img-preview {
+    width: 100px; /* Chiều rộng của preview */
+    height: 100px; /* Chiều cao của preview */
+    overflow: hidden; /* Không hiển thị phần ảnh thừa */
+    margin-top: 10px; /* Khoảng cách trên của preview */
+    border: 1px solid #dee2e6; /* Viền xung quanh preview */
+    background-size: cover; /* ảnh preview cover toàn bộ khu vực */
+  }
+</style>
 </head>
 <body>
-  <img src='1.jpg' alt='Image' />
-  <button class="upload-button">CHỌN ẢNH</button>
-  <button class="upload-submit">UPLOAD</button>
-      <div class="upload-buttons d-flex align-items-start">
-        <button id="changeBackground" hidden>CHỌN HÌNH NỀN MỚI</button>
-        <input type="file" id="newBackgroundImage" hidden>
-        <input type="file" id="imageUpload" hidden>
-        <label for="imageUpload" class="upload-button">CHỌN ẢNH</label>
-      <div class="d-flex flex-column">
-          <button class="upload-submit">UPLOAD</button>
-          <div id="noImageChosen" class="text-danger d-none">Chưa chọn ảnh</div>
-      </div>
-        <div class="upload-buttons d-flex align-items-center">
-      </div>
-    </div>
+  <div class="image-container mb-3">
+    <img id="image" src="1.jpg" alt="Original Image">
   </div>
+  <input type="file" id="imageInput" hidden>
+  
+  <label for="imageInput" class="button upload-button">CHỌN ẢNH</label>
+  
+  <div id="noImageChosen" class="text-danger d-none">Chưa chọn ảnh</div>
+  
   <!-- Crop ảnh -->
   <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -80,6 +129,11 @@
       </div>
     </div>
   </div>
+   <img id="croppedImage" src="#" alt="Cropped Image" hidden/>
+  
+  <button id="uploadButton" class="button upload-submit" hidden>UPLOAD</button>
+  
+<script>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
