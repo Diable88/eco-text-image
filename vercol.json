@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "img2img/app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/img2img_app/process", "dest": "img2img/app.py" },
+    { "src": "/img2img/(.*)", "dest": "/img2img/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
