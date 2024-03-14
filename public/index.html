@@ -18,7 +18,7 @@
     padding-top: 50px; /* Đẩy nội dung xuống một chút để tránh navbar  */
   }
 
-  .button, .upload-button, .upload-submit { /* Áp dụng style chung cho các nút */
+  .button { /* Áp dụng style chung cho các nút */
     background-color: #FFD700; /* Màu vàng */
     color: white; /* Chữ màu trắng */
     padding: 15px 32px; /* Đệm xung quanh nội dung bên trong nút */
@@ -33,7 +33,7 @@
     box-shadow: 0 4px #999; /* Tạo bóng cho nút */
     transition: all 0.2s ease-in-out; /* Thời gian chuyển tiếp khi thay đổi style */
   }
-    .button, .upload-submit { /* Áp dụng style chung cho các nút */
+    .upload-button { /* Áp dụng style chung cho các nút */
     background-color: #FFD700; /* Màu vàng */
     color: white; /* Chữ màu trắng */
     padding: 15px 32px; /* Đệm xung quanh nội dung bên trong nút */
@@ -48,6 +48,20 @@
     box-shadow: 0 4px #999; /* Tạo bóng cho nút */
     transition: all 0.2s ease-in-out; /* Thời gian chuyển tiếp khi thay đổi style */
   }
+    , .upload-submit { /* Áp dụng style chung cho các nút */
+    background-color: #FFD700; /* Màu vàng */
+    color: white; /* Chữ màu trắng */
+    padding: 15px 32px; /* Đệm xung quanh nội dung bên trong nút */
+    text-align: center; /* Căn giữa nội dung nút */
+    text-decoration: none; /* Không gạch chân cho liên kết */
+    display: inline-block; /* Cho phép xác định kích thước nút */
+    font-size: 16px; /* Cỡ chữ nút */
+    margin: 4px 2px; /* Khoảng cách giữa các nút */
+    cursor: pointer; /* Con trỏ chuột khi di chuyển qua nút */
+    border: none; /* Không viền */
+    border-radius: 10px; /* Bo góc nút */
+    box-shadow: 0 4px #999; /* Tạo bóng cho nút */
+    transition: all 0.2s ease-in-out; /* Thời gian chuyển tiếp khi thay đổi style */
 
 
   .button:hover, .upload-button:hover, .upload-submit:hover { /* Style khi hover vào nút */
@@ -64,7 +78,7 @@
 
   .image-container img {
     max-width: 100%; /* Chiều rộng tối đa của ảnh */
-    max-height: 70vh; /* Chiều cao tối đa của ảnh theo viewport height */
+    max-height: 100vh; /* Chiều cao tối đa của ảnh theo viewport height */
     object-fit: contain; /* Đảm bảo không làm méo ảnh */
   }
 
