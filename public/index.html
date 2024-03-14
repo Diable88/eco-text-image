@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
   <title>Trang chủ</title>
@@ -13,42 +15,16 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+  <!-- Add Google Fonts for Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-  .image-container {
-    /* Tạo khoảng cách xung quanh khung ảnh */
-    padding: 16px;
-    /* Màu nền phía sau ảnh để tạo cảm giác như khung chat */
-    background-color: #f5f5f5; /* Màu xám nhạt */
-    /* Bo tròn góc */
-    border-radius: 20px; /* Góc bo tròn cho khung ảnh */
-    /* Đổ bóng nhẹ để tạo cảm giác nổi */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Tạo không gian xung quanh khung */
-    margin: auto;
-    /* Đặt chiều rộng tối đa và đảm bảo ảnh không lớn hơn chiều rộng của khung */
-    max-width: 300px;
-    display: block; /* Không gian xung quanh các khối */
-  }
-
-  .image-container img {
-    /* Màu nền phía sau ảnh */
-    background-color: #fff; /* Màu trắng cho nền của ảnh */
-    /* Bo tròn góc cho ảnh */
-    border-radius: 15px; /* Góc bo tròn để phù hợp với style chat */
-    /* Đảm bảo ảnh hiển thị đầy đủ trong khung bao */
-    width: 100%; /* Chiều rộng tối đa khi ảnh phủ kín khung */
-    height: auto; /* Tự đề chỉnh chiều cao để giữ tỉ lệ của ảnh */
-    border: none; /* Không viền */
-  }
-  </style>
 </head>
-  <body>
+
+<body>
   <div class="text-box">
     <p>SỐNG HẠNH PHÚC - SỐNG ECO CENTRAL PARK</p>
   </div>
   <div class="container">
-    <img id="background" src="1.jpg" alt="Hình nền cố định">
+    <img id="background" src="2.jpg" alt="Hình nền cố định" loading="lazy">
     <div class="upload-section">
       <div class="upload-buttons d-flex align-items-start">
 
@@ -251,5 +227,5 @@
     }
   </script>
 </body>
-</html>
 
+</html>
