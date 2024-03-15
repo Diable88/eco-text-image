@@ -1,7 +1,4 @@
-
-<!DOCTYPE html>
 <html>
-
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
   <title>Trang chủ</title>
@@ -15,9 +12,8 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
-  <!-- Add Google Fonts for Roboto -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <div class="text-box">
     <p>SỐNG HẠNH PHÚC - SỐNG ECO CENTRAL PARK</p>
@@ -37,12 +33,9 @@
           <button class="upload-submit">UPLOAD</button>
           <div id="noImageChosen" class="text-danger d-none">Chưa chọn ảnh</div>
         </div>
-         <div class="upload-buttons d-flex align-items-center">
 
       </div>
     </div>
-  </div>
-  <input type="text" id="userMessage" placeholder="NHẬP THÔNG ĐIỆP CỦA BẠN" class="form-control me-2" style="max-width: 300px;">
   </div>
 
   <!-- Crop ảnh -->
@@ -154,7 +147,6 @@
         isImageChosen.removeClass('d-none');
         return;
       }
-     
       console.log(croppedDataURL);
 
       var byteString = atob(croppedDataURL.split(',')[1]);
@@ -191,10 +183,10 @@
 
         processedImage.onload = function ()
         {
-          var processedImageWidth = 768;
-          var processedImageHeight = 1024;
-          var processedImageX = 1000;
-          var processedImageY = 20;
+          var processedImageWidth = 140;
+          var processedImageHeight = 210;
+          var processedImageX = 700;
+          var processedImageY = 104;
 
           const canvas = document.createElement('canvas');
           canvas.width = backgroundImage.naturalWidth;
